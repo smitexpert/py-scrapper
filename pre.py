@@ -14,12 +14,12 @@ http_prxies = [
     'http://45.79.223.43:9091',
 ]
 
-URL = "https://thepersonage.com/actor/"
+URL = "https://thepersonage.com/post-sitemap5.xml"
 
 i = 0
 count_table = 0
 count_tr = 0
-with open('new_data.csv', 'w', newline='') as csvfile:
+with open('sitemap_data.csv', 'w', newline='', encoding='utf-8') as csvfile:
     data = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
 
     while(URL != None):
@@ -56,21 +56,21 @@ with open('new_data.csv', 'w', newline='') as csvfile:
                 for tr in trs :
                     tds = tr.find_all('td')
                     # print(tds[0].text+ ': '+tds[1].text)
-                    if(i == 0) :
-                        headers.append(tds[0].text)
+                    # if(i == 0) :
+                    #     headers.append(tds[0].text)
                     if(tds[1].text == '') :
                         tdr = 'Not Found'
                     else:
                         tdr = tds[1].text
-                        
-                    tdres = tdr.replace('$', 'USD ')
-                    tdres = tdres.replace('₹', 'INR ')
-                    tdres = tdres.replace('″', '"')
-                    tdres = tdres.replace('′', '"')
-                    body.append(tdres)
+                    body.append(tds[0].text)
+                    # tdres = tdr.replace('$', 'USD ')
+                    # tdres = tdres.replace('₹', 'INR ')
+                    # tdres = tdres.replace('″', '&rsquo;')
+                    # tdres = tdres.replace('′', '&rsquo;')
+                    body.append(tdr)
             
-            if(i==0):
-                data.writerow(headers)
+            # if(i==0):
+            #     data.writerow(headers)
             data.writerow(body)
             i=i+1
             print("Number of Article: "+str(i))
